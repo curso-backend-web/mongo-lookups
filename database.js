@@ -4,13 +4,16 @@ import config from './config.js';
 class MongoManager {
     constructor(config){
         this.url = config.url;
-        this._connect(config.db);
+        this.db = config.db;
+        this.client = new MongoClient(this.url,{useNewUrlParser:true});
+        // this._connect(config.db);
     }
-    async _connect(db){
+    async connect(){
         try {
-            this.client = new MongoClient(this.url,{useNewUrlParser:true});
-            this.client.connect();
-            this.db = this.client.db(db);
+            // this.client = new MongoClient(this.url,{useNewUrlParser:true});
+            return await this.client.connect();
+            
+            
         } catch (error) {
             throw error;
         }
